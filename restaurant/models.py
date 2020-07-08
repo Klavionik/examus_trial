@@ -38,10 +38,11 @@ class MenuItem(models.Model):
         on_delete=models.CASCADE,
         related_name='menu_items',
     )
+    # TODO: add through table with no cascade
     allergens = models.ManyToManyField(
         'Allergen',
         verbose_name='аллергены',
-        related_name='menu_items'
+        related_name='menu_items',
     )
 
     def __str__(self):
