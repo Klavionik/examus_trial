@@ -1,6 +1,10 @@
 from django.db import models
 
 
+def img_directory(instance, filename):
+    return f'menu/{instance.category.name.lower()}/{filename}'
+
+
 class Category(models.Model):
     name = models.CharField(
         'название категории',
@@ -24,7 +28,7 @@ class MenuItem(models.Model):
     )
     image = models.ImageField(
         'изображение блюда',
-        upload_to='menu_items',
+        upload_to=img_directory,
     )
     price = models.PositiveIntegerField(
         'цена блюда',
