@@ -18,6 +18,7 @@ class CreateMenuItemTest(APITestCase):
 
     def test_create_menuitem(self):
         path = reverse('menu-items')
+        token_header = {'HTTP_X_ACCESS_TOKEN': settings.ACCESS_TOKEN}
         with open(os.path.join(FIXTURES_DIR, 'menu_image', 'carribeansaladshrimp.jpg'), 'rb') as fh:
             payload = {
                 'name': 'Карибский салат с креветками',
@@ -27,6 +28,6 @@ class CreateMenuItemTest(APITestCase):
                 'calories': 600,
                 'allergens': [self.eggs.id, self.soy.id, self.shellfish.id]
             }
-            response = self.client.post(path, payload)
+            response = self.client.post(path, payload, **token_header)
 
         self.assertEqual(response.status_code, 201, 'Блюдо добавлено')
