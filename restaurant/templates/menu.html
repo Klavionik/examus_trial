@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+
+{% block title %}
     <title>Menu | Examus Restaurant</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+{% endblock %}
+
+{% block script %}
     <script>
         function getCookie(name) {
             let matches = document.cookie.match(new RegExp(
@@ -35,8 +35,9 @@
             })
         }
     </script>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
 <div class="container mt-5">
     <div class="row">
         <div class="col text-center">
@@ -49,7 +50,7 @@
             {% for obj in object_list %}
                 <span class="h4">{{ obj.name }}</span>
                 {% for item in obj.menu_items.all %}
-                    <div class="media text-left mt-2">
+                    <div class="media border rounded text-left p-1 mt-2">
                         <img src="{{ item.image.url }}" width="100" class="mr-3" alt="{{ item.name }}">
                         <div class="media-body">
                             <span class="h5">{{ item.name }}</span>
@@ -61,7 +62,7 @@
                 {% endfor %}
             {% endfor %}
             <div>
-                <form action="#" method="post">
+                <form action="{% url 'quote' %}" method="post" class="mt-2">
                     {% csrf_token %}
                     <label for="quote" class="sr-only">Get quote</label>
                     <button id="quote" class="btn btn-success">Get quote</button>
@@ -70,5 +71,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock content %}

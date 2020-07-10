@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Order quote | Examus Restaurant</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col text-center">
+                <span class="h2">Order quote</span>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                {% for item, item_subtotal, qty in order %}
+                    <div class="media border rounded text-left p-1 mt-2">
+                        <img src="{{ item.image.url }}" width="100" class="mr-3" alt="{{ item.name }}">
+                        <div class="media-body">
+                            <div class="h5">{{ item.name }}</div>
+                            <div>Qty: {{ qty }}</div>
+                            <div>Item subtotal: {{ item_subtotal }} &#8381</div>
+                            <div>Contains allergens:</div>
+                            <div>
+                                <ul>
+                                    {% for allergen in item.allergens.all %}
+                                        <li>{{ allergen.name }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            <h5 class="mt-2">Order subtotal: {{ subtotal }} &#8381</h5>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -38,7 +38,7 @@
     "model": "restaurant.allergen",
     "pk": 4,
     "fields": {
-      "name": "Eggs"
+      "name": "Egg"
     }
   },
   {
