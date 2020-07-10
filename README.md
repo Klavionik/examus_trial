@@ -10,7 +10,7 @@ $ git clone https://github.com/Klavionik/examus_trrial.git
 $ cd examus_trial
 $ docker-compose up -d
 $ docker-compose exec app python manage.py migrate
-$ docker-compose exec app python loaddata fixtures.json
+$ docker-compose exec app python manage.py loaddata fixtures.json
 ```
 
 ### Использование
