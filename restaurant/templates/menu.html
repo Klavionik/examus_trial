@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu | Examus Restaurant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script>
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([.$?*|{}()\[\]\\\/+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+
+        function add(elem) {
+            const id = elem.dataset.itemId;
+            const csrf = getCookie('csrftoken');
+            const data = {'item_id': id};
+            const url = '/add/'
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrf
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(data)
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                const qty = data['qty'];
+                elem.innerText = `Qty: ${qty} | Add`;
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <span class="h2">Menu</span>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            {% for obj in object_list %}
+                <span class="h4">{{ obj.name }}</span>
+                {% for item in obj.menu_items.all %}
+                    <div class="media text-left mt-2">
+                        <img src="{{ item.image.url }}" width="100" class="mr-3" alt="{{ item.name }}">
+                        <div class="media-body">
+                            <span class="h5">{{ item.name }}</span>
+                            <button type="button" class="btn btn-info btn-sm ml-2" onclick="add(this)" data-item-id="{{ item.id }}">Qty: 0 | Add</button>
+                            <div>{{ item.calories }} Cal</div>
+                            <div>{{ item.price }} &#8381</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            <div>
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <label for="quote" class="sr-only">Get quote</label>
+                    <button id="quote" class="btn btn-success">Get quote</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

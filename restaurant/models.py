@@ -49,7 +49,7 @@ class MenuItem(models.Model):
     )
 
     def __str__(self):
-        return f'{self.category.name} {self.name}'
+        return f'{self.name}'
 
     class Meta:
         verbose_name = 'блюдо'
